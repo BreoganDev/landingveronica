@@ -1,2 +1,11 @@
-# Local Netlify folder
+# Netlify local
 .netlify
+
+# Screenshots y logs de desarrollo
+*.png
+*.jpg
+.playwright-mcp/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
