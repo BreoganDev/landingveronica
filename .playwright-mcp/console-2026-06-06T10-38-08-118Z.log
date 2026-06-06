@@ -1,0 +1,4 @@
+[     468ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://api.whatsapp.com/data/manifest.json:0
+[     562ms] [ERROR] Manifest fetch from https://api.whatsapp.com/data/manifest.json failed, code 404 @ https://api.whatsapp.com/send/?phone=34667732963&text=Hola+Ver%C3%B3nica%2C+quiero+agendar+mi+sesi%C3%B3n+gratuita&type=phone_number&app_absent=0:0
+[    1025ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://api.whatsapp.com/data/manifest.json:0
+[    1046ms] [ERROR] Manifest fetch from https://api.whatsapp.com/data/manifest.json failed, code 404 @ https://api.whatsapp.com/send/?phone=34667732963&text=Hola+Ver%C3%B3nica%2C+quiero+agendar+mi+sesi%C3%B3n+gratuita&type=phone_number&app_absent=0:0

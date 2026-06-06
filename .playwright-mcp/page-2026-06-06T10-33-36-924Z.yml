@@ -1,0 +1,139 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - strong [ref=e4]: Sesión gratuita de claridad emocional
+      - text: "Plazas limitadas — Valor real: 100€"
+    - link "Reservar ahora" [ref=e5] [cursor=pointer]:
+      - /url: "#registro"
+  - navigation [ref=e6]:
+    - link "Verónica Reyes" [ref=e7] [cursor=pointer]:
+      - /url: "#"
+      - img "Verónica Reyes" [ref=e8]
+    - link "Sesión gratuita" [ref=e9] [cursor=pointer]:
+      - /url: "#registro"
+  - generic [ref=e10]:
+    - paragraph [ref=e11]: relacionesplenas.com
+    - generic [ref=e12]: Coach en Relaciones Auténticas
+    - heading "¿Das todo en tus relaciones y aún así no es suficiente?" [level=1] [ref=e13]:
+      - text: ¿Das todo en tus relaciones y aún así no es
+      - emphasis [ref=e14]: suficiente?
+    - paragraph [ref=e15]: "Transforma tu forma de amar en 3 pasos: sin miedo, sin culpa y sin perderte a ti misma."
+    - generic [ref=e16]:
+      - link "Agendar mi sesión gratuita" [ref=e17] [cursor=pointer]:
+        - /url: "#registro"
+      - generic [ref=e18]:
+        - text: "Plazas limitadas — Valor real:"
+        - strong [ref=e19]: 100€
+        - text: "/ Hoy: gratuita"
+  - generic [ref=e22]:
+    - generic [ref=e23]: Descubre cómo funciona
+    - generic "Reproducir video" [ref=e27] [cursor=pointer]:
+      - img [ref=e28]
+    - paragraph [ref=e30]: Descubre cómo transformar tu forma de amar sin sacrificar quien eres
+  - generic [ref=e33]:
+    - img "Verónica Reyes, Coach en Relaciones Auténticas" [ref=e36]
+    - generic [ref=e37]:
+      - generic [ref=e38]: Sobre mí
+      - heading "Tu pareja no te entiende. Tu familia te agota." [level=2] [ref=e39]:
+        - text: Tu pareja no te entiende.
+        - text: Tu familia te agota.
+      - paragraph [ref=e40]: Acompaño a personas, familias y parejas en sus vínculos. He vivido conflictos reales, y mi trabajo consiste en ayudarte a encontrar tu verdad y recuperar tu voz emocional.
+      - blockquote [ref=e41]: He aprendido que la calidad de tus relaciones influye en la calidad de tu vida.
+  - generic [ref=e43]:
+    - generic [ref=e44]:
+      - generic [ref=e45]: En una sola sesión
+      - heading "Sesiones que transforman tu vida" [level=2] [ref=e46]
+    - generic [ref=e47]:
+      - generic [ref=e48]:
+        - generic [ref=e49]: "01"
+        - paragraph [ref=e50]: Comunicar libremente sin callarte
+      - generic [ref=e51]:
+        - generic [ref=e52]: "02"
+        - paragraph [ref=e53]: Claridad sobre tus bloqueos personales
+      - generic [ref=e54]:
+        - generic [ref=e55]: "03"
+        - paragraph [ref=e56]: Herramientas para expresarte sin miedo ni culpa
+      - generic [ref=e57]:
+        - generic [ref=e58]: "04"
+        - paragraph [ref=e59]: Una herramienta práctica para aplicar desde hoy
+    - paragraph [ref=e60]: Cero presión. Cero juicio. 100% para ti.
+  - generic [ref=e63]:
+    - generic [ref=e64]:
+      - generic [ref=e65]: Para quién es
+      - heading "Tu oportunidad de cambiar" [level=2] [ref=e66]
+    - list [ref=e67]:
+      - listitem [ref=e68]: Sientes que das demasiado sin que sea suficiente
+      - listitem [ref=e69]: Te cuesta comunicar lo que sientes
+      - listitem [ref=e70]: Repites patrones de dependencia o desconexión
+      - listitem [ref=e71]: Necesitas sanar tu relación contigo misma
+      - listitem [ref=e72]: Buscas apoyo constante sin encontrar dirección
+  - generic [ref=e74]:
+    - generic [ref=e75]:
+      - generic [ref=e76]: Aclara tus expectativas
+      - heading "Lo que no es esta sesión" [level=2] [ref=e77]
+    - generic [ref=e78]:
+      - generic [ref=e79]:
+        - generic [ref=e80]: "01"
+        - paragraph [ref=e81]: Terapia tradicional prolongada
+      - generic [ref=e82]:
+        - generic [ref=e83]: "02"
+        - paragraph [ref=e84]: Una llamada de ventas
+      - generic [ref=e85]:
+        - generic [ref=e86]: "03"
+        - paragraph [ref=e87]: Una charla sin propósito
+  - generic [ref=e89]:
+    - generic [ref=e90]:
+      - heading "Lo que dicen quienes ya dieron el paso" [level=2] [ref=e91]
+      - generic [ref=e92]: 03 historias reales
+    - generic [ref=e93]:
+      - generic [ref=e94]:
+        - generic [ref=e95]: “
+        - paragraph [ref=e96]: Con Verónica entendí que el problema no era mi pareja, era cómo yo me relacionaba.
+        - generic [ref=e99]: Laura, 38 años
+      - generic [ref=e100]:
+        - generic [ref=e101]: “
+        - paragraph [ref=e102]: Nos dio herramientas reales, no frases vacías.
+        - generic [ref=e105]: Luis y Mariana, 42 y 39 años
+      - generic [ref=e106]:
+        - generic [ref=e107]: “
+        - paragraph [ref=e108]: Ya no busco que otro me complete. Aprendí a no traicionarme para ser amada.
+        - generic [ref=e111]: Sol, 29 años
+  - generic [ref=e114]:
+    - generic [ref=e115]: Reserva tu lugar
+    - heading "Aquí empieza tu transformación" [level=2] [ref=e116]
+    - paragraph [ref=e117]:
+      - text: Confidencial. Sin presión. Sin venta.
+      - text: Plazas limitadas para asegurar acompañamiento de calidad.
+    - generic [ref=e118]:
+      - generic [ref=e119]:
+        - generic [ref=e120]: Nombre
+        - textbox "Nombre" [ref=e121]:
+          - /placeholder: Tu nombre completo
+      - generic [ref=e122]:
+        - generic [ref=e123]: Correo electrónico
+        - textbox "Correo electrónico" [ref=e124]:
+          - /placeholder: tu@email.com
+      - generic [ref=e125]:
+        - checkbox "Acepto la política de privacidad" [ref=e126] [cursor=pointer]
+        - generic [ref=e127] [cursor=pointer]:
+          - text: Acepto la
+          - link "política de privacidad" [ref=e128]:
+            - /url: "#"
+      - button "Quiero entender por qué mis relaciones no funcionan" [ref=e129] [cursor=pointer]
+      - paragraph [ref=e130]:
+        - text: "Valor real:"
+        - strong [ref=e131]: 100€
+        - text: — Hoy completamente gratuita
+  - contentinfo [ref=e132]:
+    - generic [ref=e133]:
+      - img "Verónica Reyes" [ref=e135]
+      - navigation "Contacto y redes" [ref=e136]:
+        - link "Instagram" [ref=e137] [cursor=pointer]:
+          - /url: https://instagram.com/veronica.reyes.coach
+        - link "LinkedIn" [ref=e138] [cursor=pointer]:
+          - /url: https://linkedin.com/in/ver%C3%B3nica-reyes-52128330a
+        - link "+34 667 732 963" [ref=e139] [cursor=pointer]:
+          - /url: tel:+34667732963
+      - generic [ref=e140]:
+        - generic [ref=e141]: © 2025 Verónica Reyes. Todos los derechos reservados.
+        - generic [ref=e142]: veronicareyes.es

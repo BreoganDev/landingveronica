@@ -1,0 +1,5 @@
+[  267003ms] [LOG] decap-cms-app 3.13.0 @ https://unpkg.com/decap-cms@%5E3.0.0/dist/decap-cms.js:498
+[  267022ms] [LOG] decap-cms-core 3.14.0 @ https://unpkg.com/decap-cms@%5E3.0.0/dist/decap-cms.js:53
+[  267025ms] [LOG] decap-cms 3.13.0 @ https://unpkg.com/decap-cms@%5E3.0.0/dist/decap-cms.js:498
+[  267037ms] [LOG] Response for config.yml was not yaml. (Content-Type: application/octet-stream) @ https://unpkg.com/decap-cms@%5E3.0.0/dist/decap-cms.js:16
+[  269453ms] [LOG] Manually initializing identity widget @ https://unpkg.com/decap-cms@%5E3.0.0/dist/decap-cms.js:435

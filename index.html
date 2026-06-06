@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Verónica Reyes, Coach en Relaciones Auténticas. Reserva tu sesión gratuita de claridad emocional.">
+    <title>Verónica Reyes — Coach en Relaciones Auténticas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+    <!-- Netlify Identity: handles confirmation/recovery tokens sent by email -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js" defer></script>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --cream:      #F9F5F0;
+            --cream-deep: #EDE6DC;
+            --terracotta: #C47A5A;
+            --terra-light:#D4907A;
+            --charcoal:   #1A1917;
+            --charcoal-2: #2C2A27;
+            --wine:       #8B2B3A;
+            --wine-deep:  #5C1828;
+            --warm-gray:  #8A8278;
+            --border:     #DDD5CA;
+            --body-text:  #3C3530;
+        }
+
+        html { scroll-behavior: smooth; font-size: 16px; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--cream); color: var(--charcoal);
+            line-height: 1.6; overflow-x: hidden;
+        }
+
+        body::after {
+            content: ''; position: fixed; inset: 0;
+            pointer-events: none; z-index: 9999; opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-size: 200px;
+        }
+
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .reveal.in { opacity: 1; transform: none; }
+        .d1 { transition-delay: 0.1s; } .d2 { transition-delay: 0.2s; }
+        .d3 { transition-delay: 0.32s; } .d4 { transition-delay: 0.44s; }
+
+        @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:none; } }
+        .hero-label   { animation: fadeUp 0.8s ease 0.1s  both; }
+        .hero-title   { animation: fadeUp 0.9s ease 0.22s both; }
+        .hero-sub     { animation: fadeUp 0.8s ease 0.4s  both; }
+        .hero-actions { animation: fadeUp 0.8s ease 0.55s both; }
+
+        /* NAV */
+        .nav {
+            position: fixed; top:0; left:0; right:0; z-index:100;
+            padding: 1.2rem 2.5rem;
+            display: flex; align-items: center; justify-content: space-between;
+            transition: background 0.4s, backdrop-filter 0.4s, border-color 0.4s;
+            border-bottom: 1px solid transparent;
+        }
+        .nav.scrolled { background: rgba(249,245,240,0.93); backdrop-filter: blur(14px); border-color: var(--border); }
+        .nav-brand { display: flex; align-items: center; text-decoration: none; }
+        .nav-logo  { height: 36px; width: auto; display: block; }
+        .nav-cta {
+            font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em;
+            text-transform: uppercase; color: var(--cream);
+            background: var(--wine); padding: 0.6rem 1.5rem;
+            text-decoration: none; transition: background 0.25s;
+        }
+        .nav-cta:hover { background: var(--wine-deep); }
+
+        /* HERO */
+        .hero {
+            min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end;
+            padding: 9rem 2.5rem 5.5rem; position: relative; overflow: hidden; background: var(--cream);
+        }
+        .hero-ring  { position:absolute; border-radius:50%; border:1px solid var(--terracotta); pointer-events:none; top:6%; right:-8%; width:min(58vw,560px); height:min(58vw,560px); opacity:0.12; }
+        .hero-ring-2{ position:absolute; border-radius:50%; border:1px solid var(--wine); pointer-events:none; top:18%; right:4%; width:min(36vw,340px); height:min(36vw,340px); opacity:0.07; }
+        .hero-side  { position:absolute; right:2.5rem; top:50%; transform:translateY(-50%); writing-mode:vertical-rl; font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--warm-gray); opacity:0.5; }
+        .hero-label { font-size:0.68rem; font-weight:500; letter-spacing:0.2em; text-transform:uppercase; color:var(--terracotta); margin-bottom:1.75rem; display:block; }
+        .hero-title { font-family:'Cormorant Garamond',serif; font-size:clamp(3rem,7.5vw,7rem); font-weight:300; line-height:1.05; color:var(--charcoal); max-width:13ch; margin-bottom:2.25rem; }
+        .hero-title em { font-style:italic; color:var(--wine); }
+        .hero-sub   { font-size:clamp(1rem,1.8vw,1.15rem); font-weight:300; color:var(--warm-gray); max-width:48ch; line-height:1.75; margin-bottom:2.75rem; }
+        .hero-actions { display:flex; align-items:center; gap:2rem; flex-wrap:wrap; }
+        .hero-divider { width:100%; height:1px; background:var(--border); margin-top:5rem; }
+        .hero-note  { font-size:0.78rem; color:var(--warm-gray); letter-spacing:0.02em; }
+        .hero-note strong { color:var(--terracotta); }
+
+        /* BUTTONS */
+        .btn { display:inline-block; text-decoration:none; font-family:'DM Sans',sans-serif; font-size:0.78rem; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; padding:1rem 2.5rem; transition:background 0.25s, transform 0.2s; border:none; cursor:pointer; }
+        .btn-wine { background:var(--wine); color:var(--cream); }
+        .btn-wine:hover { background:var(--wine-deep); transform:translateY(-1px); }
+
+        /* LAYOUT */
+        .section { padding: 6.5rem 2.5rem; }
+        .container { max-width: 1100px; margin: 0 auto; }
+        .label { display:block; font-size:0.65rem; font-weight:500; letter-spacing:0.22em; text-transform:uppercase; color:var(--terracotta); margin-bottom:0.8rem; }
+
+        /* VIDEO */
+        .video-section { background: var(--charcoal); padding: 0; }
+        .video-wrap { max-width:860px; margin:0 auto; padding:4rem 2.5rem 5rem; }
+        .video-label { display:block; font-size:0.65rem; font-weight:500; letter-spacing:0.22em; text-transform:uppercase; color:var(--terracotta); margin-bottom:1.25rem; text-align:center; }
+        .video-container { position:relative; width:100%; aspect-ratio:16/9; background:#000; overflow:hidden; cursor:pointer; }
+        .video-container video { width:100%; height:100%; object-fit:cover; display:block; }
+        .video-overlay { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(26,25,23,0.35); transition:opacity 0.3s; }
+        .video-overlay.hidden { opacity:0; pointer-events:none; }
+        .play-btn { width:72px; height:72px; border-radius:50%; background:rgba(249,245,240,0.12); border:1.5px solid rgba(249,245,240,0.5); display:flex; align-items:center; justify-content:center; backdrop-filter:blur(6px); transition:background 0.25s, transform 0.2s; }
+        .play-btn svg { width:24px; height:24px; fill:var(--cream); margin-left:4px; }
+        .video-container:hover .play-btn { background:rgba(196,122,90,0.3); transform:scale(1.08); }
+        .video-caption { margin-top:1.25rem; text-align:center; font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-style:italic; font-weight:300; color:rgba(249,245,240,0.45); }
+
+        /* COACH */
+        .coach-section { border-top:1px solid var(--border); border-bottom:1px solid var(--border); background:var(--cream); }
+        .coach-grid { display:grid; grid-template-columns:5fr 7fr; gap:5rem; align-items:center; }
+        .portrait { aspect-ratio:3/4; overflow:hidden; position:relative; }
+        .portrait img { width:100%; height:100%; object-fit:cover; object-position:top center; display:block; }
+        .coach-content h2 { font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,3.8vw,3rem); font-weight:400; line-height:1.22; color:var(--charcoal); margin-bottom:1.5rem; white-space:pre-line; }
+        .coach-content p  { font-size:1.05rem; line-height:1.85; color:var(--body-text); margin-bottom:2rem; }
+        .coach-quote { border-left:2px solid var(--terracotta); padding-left:1.5rem; font-family:'Cormorant Garamond',serif; font-size:1.3rem; font-style:italic; font-weight:300; color:var(--wine); line-height:1.55; }
+
+        /* BENEFITS */
+        .benefits-section { background:var(--charcoal); }
+        .benefits-head { margin-bottom:4rem; }
+        .benefits-head .label { color:var(--terracotta); }
+        .benefits-head h2 { font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,4vw,3.2rem); font-weight:300; color:var(--cream); line-height:1.2; }
+        .benefits-grid { display:grid; grid-template-columns:1fr 1fr; }
+        .benefit { padding:3rem; border-top:1px solid rgba(249,245,240,0.08); border-right:1px solid rgba(249,245,240,0.08); }
+        .benefit:nth-child(2n) { border-right:none; }
+        .benefit-num  { font-family:'Cormorant Garamond',serif; font-size:4.5rem; font-weight:300; line-height:1; color:var(--terracotta); opacity:0.35; display:block; margin-bottom:1.25rem; }
+        .benefit-text { font-size:1.05rem; font-weight:300; color:rgba(249,245,240,0.85); line-height:1.65; }
+        .benefits-coda { margin-top:4.5rem; padding-top:2.5rem; border-top:1px solid rgba(249,245,240,0.08); font-family:'Cormorant Garamond',serif; font-size:1.7rem; font-style:italic; font-weight:300; color:var(--terracotta); text-align:center; }
+
+        /* FOR WHO */
+        .forwho-section { background:var(--cream); }
+        .forwho-grid { display:grid; grid-template-columns:1fr 1.6fr; gap:5rem; align-items:start; }
+        .forwho-sticky { position:sticky; top:6rem; }
+        .forwho-sticky h2 { font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,3.8vw,2.8rem); font-weight:400; line-height:1.22; color:var(--charcoal); }
+        .forwho-list { list-style:none; }
+        .forwho-list li { display:flex; align-items:flex-start; gap:1.25rem; padding:1.6rem 0; border-bottom:1px solid var(--border); font-size:1.05rem; color:var(--body-text); line-height:1.65; }
+        .forwho-list li:first-child { border-top:1px solid var(--border); }
+        .forwho-list li::before { content:''; flex-shrink:0; width:22px; height:1px; background:var(--terracotta); margin-top:0.8em; }
+
+        /* NOT */
+        .not-section { background:var(--cream-deep); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+        .not-head { margin-bottom:3rem; }
+        .not-head h2 { font-family:'Cormorant Garamond',serif; font-size:clamp(1.8rem,3vw,2.6rem); font-weight:400; color:var(--charcoal); }
+        .not-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
+        .not-item { background:var(--cream); padding:2.75rem; }
+        .not-n { font-size:0.62rem; font-weight:500; letter-spacing:0.2em; text-transform:uppercase; color:var(--warm-gray); display:block; margin-bottom:0.75rem; }
+        .not-text { font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:400; color:var(--charcoal); line-height:1.4; text-decoration:line-through; text-decoration-color:var(--wine); text-decoration-thickness:1px; text-underline-offset:4px; }
+
+        /* TESTIMONIALS */
+        .testimonials-section { background:var(--cream); border-top:1px solid var(--border); }
+        .testimonials-head { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:4rem; flex-wrap:wrap; gap:0.75rem; }
+        .testimonials-head h2 { font-family:'Cormorant Garamond',serif; font-size:clamp(1.8rem,3.5vw,2.8rem); font-weight:400; color:var(--charcoal); }
+        .testimonials-count { font-size:0.68rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--warm-gray); }
+        .testimonials-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
+        .tcard { background:var(--cream-deep); padding:3rem 2.5rem; display:flex; flex-direction:column; }
+        .tcard-mark { font-family:'Cormorant Garamond',serif; font-size:5.5rem; line-height:0.75; color:var(--terracotta); opacity:0.28; margin-bottom:1.5rem; display:block; user-select:none; }
+        .tcard-text { font-family:'Cormorant Garamond',serif; font-size:1.25rem; font-style:italic; font-weight:400; line-height:1.65; color:var(--charcoal); margin-bottom:2.25rem; flex:1; }
+        .tcard-author { display:flex; align-items:center; gap:0.85rem; }
+        .tcard-line { width:22px; height:1px; background:var(--terracotta); }
+        .tcard-name { font-size:0.72rem; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; color:var(--warm-gray); }
+
+        /* FORM */
+        .form-section { background:var(--wine-deep); position:relative; overflow:hidden; }
+        .form-section::before { content:''; position:absolute; top:-35%; right:-15%; width:65%; height:125%; border-radius:50%; border:1px solid rgba(196,122,90,0.12); pointer-events:none; }
+        .form-section::after  { content:''; position:absolute; bottom:-25%; left:-12%; width:48%; height:90%; border-radius:50%; border:1px solid rgba(196,122,90,0.08); pointer-events:none; }
+        .form-wrap { position:relative; z-index:1; max-width:620px; }
+        .form-section .label { color:rgba(196,122,90,0.75); }
+        .form-section h2 { font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,4vw,3.2rem); font-weight:300; color:var(--cream); line-height:1.2; margin-bottom:0.75rem; }
+        .form-meta { font-size:0.88rem; color:rgba(249,245,240,0.45); margin-bottom:3rem; line-height:1.7; white-space:pre-line; }
+        .field { margin-bottom:1.25rem; }
+        .field-label { display:block; font-size:0.68rem; font-weight:500; letter-spacing:0.16em; text-transform:uppercase; color:rgba(249,245,240,0.42); margin-bottom:0.5rem; }
+        .field-input { width:100%; background:rgba(249,245,240,0.05); border:1px solid rgba(249,245,240,0.13); padding:0.9rem 1.2rem; font-family:'DM Sans',sans-serif; font-size:0.95rem; color:var(--cream); outline:none; border-radius:0; -webkit-appearance:none; appearance:none; transition:border-color 0.2s; }
+        .field-input::placeholder { color:rgba(249,245,240,0.22); }
+        .field-input:focus { border-color:var(--terracotta); }
+        .check-row { display:flex; align-items:flex-start; gap:0.85rem; margin:0.5rem 0 2.25rem; }
+        .check-row input[type="checkbox"] { width:15px; height:15px; flex-shrink:0; accent-color:var(--terracotta); margin-top:3px; cursor:pointer; }
+        .check-row label { font-size:0.78rem; color:rgba(249,245,240,0.38); line-height:1.55; cursor:pointer; }
+        .check-row label a { color:var(--terracotta); text-decoration:none; }
+        .check-row label a:hover { text-decoration:underline; }
+        .btn-form { width:100%; background:var(--terracotta); color:var(--cream); border:none; padding:1.15rem 1.5rem; font-family:'DM Sans',sans-serif; font-size:0.82rem; font-weight:500; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer; transition:background 0.25s; }
+        .btn-form:hover { background:var(--terra-light); }
+        .form-offer { margin-top:1.5rem; font-size:0.75rem; color:rgba(249,245,240,0.3); text-align:center; letter-spacing:0.04em; }
+        .form-offer strong { color:rgba(249,245,240,0.55); }
+
+        /* FOOTER */
+        .footer { background:var(--charcoal-2); padding:3.5rem 2.5rem; }
+        .footer-inner { max-width:1100px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:2rem; }
+        .footer-brand { display:flex; align-items:center; }
+        .footer-logo  { height:42px; width:auto; display:block; filter:brightness(0) invert(1); opacity:0.75; }
+        .footer-links { display:flex; gap:1.75rem; flex-wrap:wrap; align-items:center; }
+        .footer-link  { font-size:0.72rem; font-weight:400; letter-spacing:0.08em; text-transform:uppercase; color:var(--warm-gray); text-decoration:none; transition:color 0.2s; }
+        .footer-link:hover { color:var(--cream); }
+        .footer-bottom { width:100%; margin-top:2rem; padding-top:1.75rem; border-top:1px solid rgba(249,245,240,0.07); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; }
+        .footer-copy { font-size:0.68rem; color:rgba(138,130,120,0.45); }
+        .footer-web  { font-size:0.68rem; color:rgba(138,130,120,0.3); }
+
+        /* FLOATING BAR */
+        .float-bar { position:fixed; bottom:0; left:0; right:0; z-index:90; background:var(--wine-deep); border-top:1px solid rgba(196,122,90,0.18); padding:0.85rem 2rem; display:flex; align-items:center; justify-content:space-between; gap:1.5rem; transform:translateY(100%); transition:transform 0.45s cubic-bezier(0.16,1,0.3,1); }
+        .float-bar.show { transform:none; }
+        .float-bar-text { font-size:0.82rem; color:rgba(249,245,240,0.5); }
+        .float-bar-text strong { display:block; color:var(--cream); font-size:0.88rem; font-weight:500; margin-bottom:0.1rem; }
+        .float-bar-cta { flex-shrink:0; font-size:0.72rem; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; text-decoration:none; background:var(--terracotta); color:var(--charcoal); padding:0.6rem 1.5rem; transition:background 0.2s; white-space:nowrap; }
+        .float-bar-cta:hover { background:var(--terra-light); }
+
+        /* RESPONSIVE */
+        @media (max-width: 960px) {
+            .coach-grid, .forwho-grid { grid-template-columns:1fr; gap:2.5rem; }
+            .coach-content { order:-1; }
+            .portrait { max-width:340px; aspect-ratio:4/3; }
+            .forwho-sticky { position:static; }
+            .benefits-grid { grid-template-columns:1fr; }
+            .benefit:nth-child(2n) { border-right:1px solid rgba(249,245,240,0.08); }
+            .not-grid { grid-template-columns:1fr; gap:2px; }
+            .testimonials-grid { grid-template-columns:1fr; gap:1.25rem; }
+            .testimonials-head { flex-direction:column; }
+        }
+        @media (max-width: 640px) {
+            .nav { padding:1rem 1.25rem; }
+            .hero { padding:8rem 1.25rem 4rem; }
+            .section { padding:4rem 1.25rem; }
+            .benefit { padding:2rem 1.25rem; }
+            .not-item { padding:2rem 1.5rem; }
+            .tcard { padding:2.25rem 1.75rem; }
+            .footer { padding:2.5rem 1.25rem; }
+            .footer-inner { flex-direction:column; align-items:flex-start; }
+            .float-bar { padding:0.85rem 1.25rem; flex-wrap:wrap; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Floating bar -->
+<div class="float-bar" id="floatBar">
+    <div class="float-bar-text">
+        <strong>Sesión gratuita de claridad emocional</strong>
+        Plazas limitadas &mdash; Valor real: 100&euro;
+    </div>
+    <a class="float-bar-cta wa-link">Reservar ahora</a>
+</div>
+
+<!-- Nav -->
+<nav class="nav" id="nav">
+    <a href="#" class="nav-brand">
+        <img class="nav-logo" id="navLogo" src="assets/logo.webp" alt="Verónica Reyes">
+    </a>
+    <a class="nav-cta wa-link">Sesión gratuita</a>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="inicio">
+    <div class="hero-ring" aria-hidden="true"></div>
+    <div class="hero-ring-2" aria-hidden="true"></div>
+    <p class="hero-side" aria-hidden="true">relacionesplenas.com</p>
+    <span class="hero-label">Coach en Relaciones Auténticas</span>
+    <h1 class="hero-title">
+        <span id="heroHeadline"></span> <em id="heroItalic"></em>
+    </h1>
+    <p class="hero-sub" id="heroSubtitle"></p>
+    <div class="hero-actions">
+        <a class="btn btn-wine wa-link" id="heroCta"></a>
+        <span class="hero-note" id="heroNote"></span>
+    </div>
+    <div class="hero-divider" aria-hidden="true"></div>
+</section>
+
+<!-- Video -->
+<section class="video-section" id="video">
+    <div class="video-wrap">
+        <span class="video-label reveal" id="videoLabel"></span>
+        <div class="video-container reveal d1" id="videoContainer">
+            <video id="mainVideo" src="assets/video-compressed.mp4" playsinline muted preload="metadata"></video>
+            <div class="video-overlay" id="videoOverlay">
+                <div class="play-btn" aria-label="Reproducir video">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+            </div>
+        </div>
+        <p class="video-caption reveal d2" id="videoCaption"></p>
+    </div>
+</section>
+
+<!-- Coach -->
+<section class="section coach-section" id="sobre-mi">
+    <div class="container">
+        <div class="coach-grid">
+            <div class="reveal">
+                <div class="portrait">
+                    <img id="coachPhoto" src="assets/vero-end.webp" alt="Verónica Reyes, Coach en Relaciones Auténticas">
+                </div>
+            </div>
+            <div class="coach-content">
+                <span class="label reveal">Sobre mí</span>
+                <h2 class="reveal d1" id="coachHeadline"></h2>
+                <p class="reveal d2" id="coachBody"></p>
+                <blockquote class="coach-quote reveal d3" id="coachQuote"></blockquote>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Benefits -->
+<section class="section benefits-section" id="que-te-llevas">
+    <div class="container">
+        <div class="benefits-head">
+            <span class="label reveal" id="benefitsLabel"></span>
+            <h2 class="reveal d1" id="benefitsHeadline"></h2>
+        </div>
+        <div class="benefits-grid" id="benefitsGrid"></div>
+        <p class="benefits-coda reveal" id="benefitsCoda"></p>
+    </div>
+</section>
+
+<!-- For who -->
+<section class="section forwho-section" id="para-quien">
+    <div class="container">
+        <div class="forwho-grid">
+            <div class="forwho-sticky">
+                <span class="label reveal">Para quién es</span>
+                <h2 class="reveal d1" id="forwhoHeadline"></h2>
+            </div>
+            <ul class="forwho-list" id="forwhoList"></ul>
+        </div>
+    </div>
+</section>
+
+<!-- Not -->
+<section class="section not-section">
+    <div class="container">
+        <div class="not-head">
+            <span class="label reveal">Aclara tus expectativas</span>
+            <h2 class="reveal d1">Lo que no es esta sesión</h2>
+        </div>
+        <div class="not-grid" id="notGrid"></div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="section testimonials-section" id="testimonios">
+    <div class="container">
+        <div class="testimonials-head">
+            <h2 class="reveal">Lo que dicen quienes ya dieron el paso</h2>
+            <span class="testimonials-count reveal" id="testimonialsCount"></span>
+        </div>
+        <div class="testimonials-grid" id="testimonialsGrid"></div>
+    </div>
+</section>
+
+<!-- Form -->
+<section class="section form-section" id="registro">
+    <div class="container">
+        <div class="form-wrap">
+            <span class="label reveal">Reserva tu lugar</span>
+            <h2 class="reveal d1" id="formHeadline"></h2>
+            <p class="form-meta reveal d2" id="formMeta"></p>
+            <form class="reveal d3" id="contactForm" novalidate>
+                <div class="field">
+                    <label class="field-label" for="nombre">Nombre</label>
+                    <input class="field-input" type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" required>
+                </div>
+                <div class="field">
+                    <label class="field-label" for="email">Correo electrónico</label>
+                    <input class="field-input" type="email" id="email" name="email" placeholder="tu@email.com" required>
+                </div>
+                <div class="check-row">
+                    <input type="checkbox" id="privacidad" name="privacidad" required>
+                    <label for="privacidad">Acepto la <a href="#">política de privacidad</a></label>
+                </div>
+                <button type="submit" class="btn-form" id="formCta"></button>
+                <p class="form-offer">Valor real: <strong>100&euro;</strong> &mdash; Hoy completamente gratuita</p>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <img class="footer-logo" id="footerLogo" src="assets/logo-white.webp" alt="Verónica Reyes">
+        </div>
+        <nav class="footer-links" aria-label="Redes y contacto">
+            <a class="footer-link" id="footerInstagram" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a class="footer-link" id="footerLinkedin" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a class="footer-link" id="footerPhone"></a>
+        </nav>
+        <div class="footer-bottom">
+            <span class="footer-copy" id="footerCopyright"></span>
+            <span class="footer-web">veronicareyes.es</span>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // ── Helpers ─────────────────────────────────────────────────
+    const $ = id => document.getElementById(id);
+    const setText = (id, v)    => { const e=$(id); if(e&&v!=null) e.textContent=v; };
+    const setAttr = (id, a, v) => { const e=$(id); if(e&&v!=null) e.setAttribute(a,v); };
+
+    // Escape HTML to prevent XSS when building list HTML from CMS content
+    const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+    // ── Scroll observer ─────────────────────────────────────────
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); });
+    }, { threshold: 0.1, rootMargin: '0px 0px -36px 0px' });
+
+    function observeNew() {
+        document.querySelectorAll('.reveal:not(.watched)').forEach(el => {
+            el.classList.add('watched');
+            observer.observe(el);
+        });
+    }
+
+    // ── Load & render content ────────────────────────────────────
+    async function init() {
+        let data;
+        try {
+            const res = await fetch('assets/content.json');
+            data = await res.json();
+        } catch(e) {
+            console.error('No se pudo cargar el contenido:', e);
+            return;
+        }
+
+        // Logos
+        setAttr('navLogo',    'src', data.logo);
+        setAttr('footerLogo', 'src', data.logo_white);
+
+        // Hero
+        setText('heroHeadline', data.hero_headline);
+        setText('heroItalic',   data.hero_italic);
+        setText('heroSubtitle', data.hero_subtitle);
+        setText('heroCta',      data.hero_cta);
+        setText('heroNote',     data.hero_note);
+
+        // Video
+        setText('videoLabel',   data.video_label);
+        setAttr('mainVideo',    'src', data.video);
+        setText('videoCaption', data.video_caption);
+
+        // Coach
+        setAttr('coachPhoto',   'src', data.coach_photo);
+        setText('coachHeadline', data.coach_headline); // white-space:pre-line handles \n in CSS
+        setText('coachBody',    data.coach_body);
+        setText('coachQuote',   data.coach_quote);
+
+        // Benefits
+        setText('benefitsLabel',    data.benefits_label);
+        setText('benefitsHeadline', data.benefits_headline);
+        $('benefitsGrid').innerHTML = data.benefits.map((b, i) => `
+            <div class="benefit reveal">
+                <span class="benefit-num">0${i + 1}</span>
+                <p class="benefit-text">${esc(b.text)}</p>
+            </div>`).join('');
+        setText('benefitsCoda', data.benefits_coda);
+
+        // For who
+        setText('forwhoHeadline', data.forwho_headline);
+        $('forwhoList').innerHTML = data.forwho_items.map(item => `
+            <li class="reveal">${esc(item.text)}</li>`).join('');
+
+        // Not
+        $('notGrid').innerHTML = data.not_items.map((item, i) => `
+            <div class="not-item reveal">
+                <span class="not-n">0${i + 1}</span>
+                <p class="not-text">${esc(item.text)}</p>
+            </div>`).join('');
+
+        // Testimonials
+        const n = data.testimonials.length;
+        setText('testimonialsCount', `0${n} histori${n === 1 ? 'a real' : 'as reales'}`);
+        $('testimonialsGrid').innerHTML = data.testimonials.map(t => `
+            <div class="tcard reveal">
+                <span class="tcard-mark" aria-hidden="true">&ldquo;</span>
+                <p class="tcard-text">${esc(t.quote)}</p>
+                <div class="tcard-author">
+                    <div class="tcard-line" aria-hidden="true"></div>
+                    <span class="tcard-name">${esc(t.author)}</span>
+                </div>
+            </div>`).join('');
+
+        // Form
+        setText('formHeadline', data.form_headline);
+        setText('formMeta', data.form_meta); // white-space:pre-line handles \n in CSS
+        setText('formCta', data.form_cta);
+
+        // WhatsApp — update all .wa-link elements
+        const waUrl = `https://wa.me/${data.whatsapp_number}?text=${encodeURIComponent(data.whatsapp_message)}`;
+        document.querySelectorAll('.wa-link').forEach(el => {
+            el.href   = waUrl;
+            el.target = '_blank';
+            el.rel    = 'noopener noreferrer';
+        });
+
+        // Footer
+        setAttr('footerInstagram', 'href', data.instagram_url);
+        setAttr('footerLinkedin',  'href', data.linkedin_url);
+        setText('footerPhone',      data.phone);
+        setAttr('footerPhone',     'href', `tel:${data.phone.replace(/\s/g,'')}`);
+        setText('footerCopyright',  data.copyright);
+
+        // Observe newly rendered elements
+        observeNew();
+
+        // Form submit → WhatsApp with name
+        $('contactForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const nombre = $('nombre').value.trim();
+            if (!nombre || !$('privacidad').checked) return;
+            const msg = encodeURIComponent(`Hola Verónica, soy ${nombre} y quiero agendar mi sesión gratuita.`);
+            window.open(`https://wa.me/${data.whatsapp_number}?text=${msg}`, '_blank', 'noopener');
+        });
+
+        // Video player
+        const video   = $('mainVideo');
+        const overlay = $('videoOverlay');
+        $('videoContainer').addEventListener('click', () => {
+            if (video.paused) { video.muted = false; video.play(); overlay.classList.add('hidden'); }
+            else              { video.pause(); overlay.classList.remove('hidden'); }
+        });
+        video.addEventListener('ended', () => overlay.classList.remove('hidden'));
+    }
+
+    // ── Nav + float bar on scroll ────────────────────────────────
+    const nav      = $('nav');
+    const floatBar = $('floatBar');
+    window.addEventListener('scroll', () => {
+        const y = window.scrollY;
+        nav.classList.toggle('scrolled', y > 50);
+        floatBar.classList.toggle('show', y > window.innerHeight * 0.65);
+    }, { passive: true });
+
+    // Netlify Identity: procesa tokens de confirmación/recuperación en la URL
+    // y redirige al panel tras login exitoso
+    if (window.netlifyIdentity) {
+        window.netlifyIdentity.on('init', user => {
+            if (!user) {
+                window.netlifyIdentity.on('login', () => {
+                    document.location.href = '/admin/';
+                });
+            }
+        });
+    }
+
+    init();
+</script>
+</body>
+</html>
