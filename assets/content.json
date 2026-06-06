@@ -1,47 +1,64 @@
 {
   "logo": "assets/logo.webp",
   "logo_white": "assets/logo-white.webp",
-
   "hero_headline": "¿Das todo en tus relaciones y aún así no es",
   "hero_italic": "suficiente?",
   "hero_subtitle": "Transforma tu forma de amar en 3 pasos: sin miedo, sin culpa y sin perderte a ti misma.",
   "hero_cta": "Agendar mi sesión gratuita",
   "hero_note": "Plazas limitadas — Valor real: 100€ / Hoy: gratuita",
-
   "video_label": "Descubre cómo funciona",
   "video": "assets/video-compressed.mp4",
   "video_caption": "Descubre cómo transformar tu forma de amar sin sacrificar quien eres",
-
   "coach_photo": "assets/vero-end.webp",
   "coach_headline": "Tu pareja no te entiende.\nTu familia te agota.",
   "coach_body": "Acompaño a personas, familias y parejas en sus vínculos. He vivido conflictos reales, y mi trabajo consiste en ayudarte a encontrar tu verdad y recuperar tu voz emocional.",
   "coach_quote": "He aprendido que la calidad de tus relaciones influye en la calidad de tu vida.",
-
   "benefits_label": "En una sola sesión",
   "benefits_headline": "Sesiones que transforman tu vida",
   "benefits": [
-    { "text": "Comunicar libremente sin callarte" },
-    { "text": "Claridad sobre tus bloqueos personales" },
-    { "text": "Herramientas para expresarte sin miedo ni culpa" },
-    { "text": "Una herramienta práctica para aplicar desde hoy" }
+    {
+      "text": "Comunicar libremente sin callarte"
+    },
+    {
+      "text": "Claridad sobre tus bloqueos personales"
+    },
+    {
+      "text": "Herramientas para expresarte sin miedo ni culpa"
+    },
+    {
+      "text": "Una herramienta práctica para aplicar desde hoy"
+    }
   ],
   "benefits_coda": "Cero presión. Cero juicio. 100% para ti.",
-
   "forwho_headline": "Tu oportunidad de cambiar",
   "forwho_items": [
-    { "text": "Sientes que das demasiado sin que sea suficiente" },
-    { "text": "Te cuesta comunicar lo que sientes" },
-    { "text": "Repites patrones de dependencia o desconexión" },
-    { "text": "Necesitas sanar tu relación contigo misma" },
-    { "text": "Buscas apoyo constante sin encontrar dirección" }
+    {
+      "text": "Sientes que das demasiado sin que sea suficiente"
+    },
+    {
+      "text": "Te cuesta comunicar lo que sientes"
+    },
+    {
+      "text": "Repites patrones de dependencia o desconexión"
+    },
+    {
+      "text": "Necesitas sanar tu relación contigo misma"
+    },
+    {
+      "text": "Buscas apoyo constante sin encontrar dirección"
+    }
   ],
-
   "not_items": [
-    { "text": "Terapia tradicional prolongada" },
-    { "text": "Una llamada de ventas" },
-    { "text": "Una charla sin propósito" }
+    {
+      "text": "Terapia tradicional prolongada"
+    },
+    {
+      "text": "Una llamada de ventas"
+    },
+    {
+      "text": "Una charla sin propósito"
+    }
   ],
-
   "testimonials": [
     {
       "quote": "Con Verónica entendí que el problema no era mi pareja, era cómo yo me relacionaba.",
@@ -56,14 +73,11 @@
       "author": "Sol, 29 años"
     }
   ],
-
   "form_headline": "Aquí empieza tu transformación",
   "form_meta": "Confidencial. Sin presión. Sin venta.\nPlazas limitadas para asegurar acompañamiento de calidad.",
   "form_cta": "Quiero entender por qué mis relaciones no funcionan",
-
   "whatsapp_number": "34667732963",
   "whatsapp_message": "Hola Verónica, quiero agendar mi sesión gratuita",
-
   "instagram_url": "https://instagram.com/veronica.reyes.coach",
   "linkedin_url": "https://linkedin.com/in/ver%C3%B3nica-reyes-52128330a",
   "phone": "+34 667 732 963",
