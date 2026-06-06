@@ -1,8 +1,9 @@
 [build]
   publish = "."
   command = ""
+  functions = "netlify/functions"
 
-# Netlify Identity: redirect from admin
+# Admin panel redirect
 [[redirects]]
   from = "/admin"
   to   = "/admin/index.html"

@@ -1,13 +1,774 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex">
-  <title>Panel de administración — Verónica Reyes</title>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <meta name="robots" content="noindex, nofollow">
+  <title>Panel — Verónica Reyes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:     #F9F5F0;
+      --terracotta:#C47A5A;
+      --charcoal:  #1A1917;
+      --wine:      #8B2B3A;
+      --wine-deep: #5C1828;
+      --sidebar:   #161310;
+      --sd-text:   rgba(255,255,255,0.65);
+      --sd-active: #C47A5A;
+      --field-border: #DDD5CB;
+      --field-focus:  #C47A5A;
+      --text:      #2A2420;
+      --text-light:#7A6E68;
+    }
+
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text); }
+
+    /* ─── LOGIN ─── */
+    #loginScreen {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      background: var(--charcoal);
+    }
+    .lc {
+      width: 360px; padding: 48px 40px; background: #fff;
+      border-radius: 4px; text-align: center;
+    }
+    .lc img { height: 52px; object-fit: contain; margin-bottom: 28px; }
+    .lc h1 {
+      font-family: 'Cormorant Garamond', serif; font-size: 22px;
+      font-weight: 400; color: var(--charcoal); margin-bottom: 8px;
+    }
+    .lc p { font-size: 13px; color: var(--text-light); margin-bottom: 28px; }
+    .pw-wrap { position: relative; margin-bottom: 12px; }
+    .pw-wrap input {
+      width: 100%; padding: 12px 16px; border: 1.5px solid var(--field-border);
+      border-radius: 3px; font-size: 15px; font-family: inherit;
+      transition: border-color .2s; outline: none;
+    }
+    .pw-wrap input:focus { border-color: var(--field-focus); }
+    .btn-login {
+      width: 100%; padding: 13px; background: var(--wine); color: #fff;
+      border: none; border-radius: 3px; font-family: inherit; font-size: 14px;
+      font-weight: 500; letter-spacing: .03em; cursor: pointer; transition: background .2s;
+    }
+    .btn-login:hover { background: var(--wine-deep); }
+    .btn-login:disabled { opacity: .5; cursor: not-allowed; }
+    .login-err {
+      margin-top: 12px; font-size: 13px; color: var(--wine); display: none;
+    }
+
+    /* ─── LAYOUT ─── */
+    #adminApp { display: none; height: 100vh; overflow: hidden; }
+    .layout { display: flex; height: 100%; }
+
+    /* ─── SIDEBAR ─── */
+    #sidebar {
+      width: 232px; flex-shrink: 0; background: var(--sidebar);
+      display: flex; flex-direction: column; overflow: hidden;
+    }
+    .sd-logo {
+      padding: 28px 24px 20px;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+    .sd-logo img { height: 36px; object-fit: contain; filter: brightness(0) invert(1); }
+    .sd-logo span {
+      display: block; margin-top: 8px; font-size: 10px; letter-spacing: .12em;
+      text-transform: uppercase; color: rgba(255,255,255,.3); font-weight: 500;
+    }
+    nav { flex: 1; overflow-y: auto; padding: 12px 0; }
+    nav a {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 24px; color: var(--sd-text); text-decoration: none;
+      font-size: 13.5px; font-weight: 400; letter-spacing: .01em;
+      transition: color .15s, background .15s; border-left: 2px solid transparent;
+    }
+    nav a .dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: rgba(255,255,255,.25); flex-shrink: 0; transition: background .15s;
+    }
+    nav a:hover { color: #fff; background: rgba(255,255,255,.04); }
+    nav a.active {
+      color: #fff; background: rgba(196,122,90,.12);
+      border-left-color: var(--sd-active);
+    }
+    nav a.active .dot { background: var(--sd-active); }
+    .sd-foot {
+      padding: 16px 24px;
+      border-top: 1px solid rgba(255,255,255,.07);
+    }
+    .btn-logout {
+      background: none; border: 1px solid rgba(255,255,255,.18); color: var(--sd-text);
+      font-family: inherit; font-size: 12px; padding: 8px 14px; border-radius: 3px;
+      cursor: pointer; width: 100%; transition: all .15s; letter-spacing: .04em;
+    }
+    .btn-logout:hover { color: #fff; border-color: rgba(255,255,255,.4); }
+
+    /* ─── MAIN ─── */
+    .main-area { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+    #mainHeader {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 64px; background: #fff;
+      border-bottom: 1px solid var(--field-border); flex-shrink: 0;
+      box-shadow: 0 1px 4px rgba(0,0,0,.04);
+    }
+    #mainHeader h2 {
+      font-family: 'Cormorant Garamond', serif; font-size: 20px;
+      font-weight: 400; color: var(--charcoal);
+    }
+    .header-right { display: flex; align-items: center; gap: 16px; }
+    #saveStatus { font-size: 13px; color: var(--text-light); }
+    #saveStatus.ok   { color: #2D7A50; }
+    #saveStatus.err  { color: var(--wine); }
+    .btn-save {
+      padding: 9px 22px; background: var(--wine); color: #fff;
+      border: none; border-radius: 3px; font-family: inherit;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      transition: background .2s; letter-spacing: .02em;
+    }
+    .btn-save:hover { background: var(--wine-deep); }
+    .btn-save:disabled { opacity: .5; cursor: not-allowed; }
+    #sectionContent {
+      flex: 1; overflow-y: auto; padding: 40px;
+      background: var(--cream);
+    }
+
+    /* ─── FIELDS ─── */
+    .field-group { margin-bottom: 28px; }
+    .field-group label {
+      display: block; margin-bottom: 7px; font-size: 11px;
+      letter-spacing: .1em; text-transform: uppercase;
+      font-weight: 600; color: var(--terracotta);
+    }
+    .field-group .hint {
+      font-size: 12px; color: var(--text-light); margin-top: 5px;
+      font-style: italic;
+    }
+    .f-input, .f-textarea {
+      width: 100%; padding: 11px 14px;
+      border: 1.5px solid var(--field-border); border-radius: 3px;
+      font-family: 'DM Sans', sans-serif; font-size: 14.5px;
+      color: var(--text); background: #fff;
+      transition: border-color .2s; outline: none; resize: vertical;
+    }
+    .f-input:focus, .f-textarea:focus { border-color: var(--field-focus); }
+    .f-textarea { min-height: 90px; line-height: 1.55; }
+
+    /* ─── IMAGE ─── */
+    .img-field { display: flex; align-items: flex-start; gap: 20px; }
+    .img-preview {
+      width: 140px; height: 100px; border-radius: 3px;
+      background: #EDE7DF; border: 1.5px solid var(--field-border);
+      object-fit: contain; flex-shrink: 0; padding: 8px;
+    }
+    .img-actions { display: flex; flex-direction: column; gap: 8px; padding-top: 4px; }
+    .btn-upload {
+      padding: 9px 16px; border: 1.5px solid var(--terracotta);
+      color: var(--terracotta); background: transparent; border-radius: 3px;
+      font-family: inherit; font-size: 13px; font-weight: 500;
+      cursor: pointer; transition: all .2s; white-space: nowrap;
+    }
+    .btn-upload:hover { background: var(--terracotta); color: #fff; }
+    .img-status { font-size: 12px; color: var(--text-light); }
+    .img-status.uploading { color: var(--terracotta); }
+    .img-status.ok  { color: #2D7A50; }
+    .img-status.err { color: var(--wine); }
+    input[type="file"] { display: none; }
+
+    /* ─── LISTS ─── */
+    .list-container { display: flex; flex-direction: column; gap: 8px; }
+    .list-item { display: flex; align-items: center; gap: 8px; }
+    .list-item .f-input { flex: 1; }
+    .btn-remove {
+      width: 32px; height: 32px; border: none; background: transparent;
+      color: #BFB5AF; font-size: 18px; cursor: pointer; border-radius: 3px;
+      flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+      transition: color .15s, background .15s;
+    }
+    .btn-remove:hover { color: var(--wine); background: rgba(139,43,58,.07); }
+    .btn-add {
+      align-self: flex-start; margin-top: 4px;
+      padding: 8px 14px; border: 1.5px dashed var(--field-border);
+      background: transparent; color: var(--text-light); border-radius: 3px;
+      font-family: inherit; font-size: 13px; cursor: pointer; transition: all .15s;
+    }
+    .btn-add:hover { border-color: var(--terracotta); color: var(--terracotta); }
+
+    /* ─── TESTIMONIALS ─── */
+    .t-item {
+      background: #fff; border: 1.5px solid var(--field-border);
+      border-radius: 4px; padding: 20px; margin-bottom: 12px;
+    }
+    .t-item .f-textarea { min-height: 70px; }
+    .t-item label { font-size: 11px; color: var(--text-light); margin-bottom: 5px; display: block; }
+    .t-author { flex: 1; }
+    .t-remove {
+      margin-top: 4px; padding: 6px 12px;
+      border: 1px solid var(--field-border); background: transparent;
+      color: var(--text-light); border-radius: 3px; font-family: inherit;
+      font-size: 12px; cursor: pointer; transition: all .15s; white-space: nowrap;
+    }
+    .t-remove:hover { border-color: var(--wine); color: var(--wine); }
+
+    /* ─── CARD ─── */
+    .card {
+      background: #fff; border-radius: 4px; padding: 32px 36px;
+      border: 1px solid var(--field-border); max-width: 780px;
+    }
+
+    /* ─── TOAST ─── */
+    #toast {
+      position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%);
+      padding: 12px 24px; border-radius: 3px; font-size: 13.5px;
+      font-weight: 500; color: #fff; z-index: 9999;
+      animation: toastIn .2s ease; pointer-events: none;
+    }
+    #toast.ok  { background: #2D7A50; }
+    #toast.err { background: var(--wine); }
+    @keyframes toastIn { from { opacity:0; transform: translateX(-50%) translateY(8px); } }
+  </style>
 </head>
 <body>
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+
+<!-- ── LOGIN ── -->
+<div id="loginScreen">
+  <div class="lc">
+    <img src="../assets/logo.webp" alt="Verónica Reyes" onerror="this.style.display='none'">
+    <h1>Panel de administración</h1>
+    <p>Verónica Reyes &middot; Relaciones Auténticas</p>
+    <div class="pw-wrap">
+      <input type="password" id="pwInput" placeholder="Contraseña" autocomplete="current-password">
+    </div>
+    <button class="btn-login" id="loginBtn">Entrar</button>
+    <p class="login-err" id="loginErr">Contraseña incorrecta. Inténtalo de nuevo.</p>
+  </div>
+</div>
+
+<!-- ── ADMIN ── -->
+<div id="adminApp">
+  <div class="layout">
+    <aside id="sidebar">
+      <div class="sd-logo">
+        <img src="../assets/logo.webp" alt="Logo" onerror="this.style.display='none'">
+        <span>Panel de contenido</span>
+      </div>
+      <nav id="sideNav"></nav>
+      <div class="sd-foot">
+        <button class="btn-logout" id="logoutBtn">Cerrar sesión</button>
+      </div>
+    </aside>
+
+    <div class="main-area">
+      <header id="mainHeader">
+        <h2 id="headerTitle">&mdash;</h2>
+        <div class="header-right">
+          <span id="saveStatus"></span>
+          <button class="btn-save" id="saveBtn">Guardar cambios</button>
+        </div>
+      </header>
+      <div id="sectionContent"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" style="display:none"></div>
+
+<script>
+/* ──────────────────────────────────────────
+   CONFIGURACIÓN
+────────────────────────────────────────── */
+const API = '/.netlify/functions/save-content';
+
+const SECTIONS = [
+  {
+    id: 'identity', label: 'Identidad',
+    fields: [
+      { key: 'logo',       label: 'Logo (fondo claro)',  type: 'image', prefix: 'logo' },
+      { key: 'logo_white', label: 'Logo (fondo oscuro)', type: 'image', prefix: 'logo-white' }
+    ]
+  },
+  {
+    id: 'hero', label: 'Hero',
+    fields: [
+      { key: 'hero_headline', label: 'Titular (primera parte)',    type: 'text' },
+      { key: 'hero_italic',   label: 'Palabra en itálica (vino)', type: 'text' },
+      { key: 'hero_subtitle', label: 'Subtítulo',                 type: 'textarea' },
+      { key: 'hero_cta',      label: 'Texto del botón CTA',       type: 'text' },
+      { key: 'hero_note',     label: 'Nota bajo el botón',        type: 'text' }
+    ]
+  },
+  {
+    id: 'video', label: 'Video',
+    fields: [
+      { key: 'video_label',   label: 'Etiqueta de sección', type: 'text' },
+      { key: 'video',         label: 'Ruta del video',      type: 'text',
+        hint: 'Ruta local (assets/video.mp4). Para cambiar el archivo de video, súbelo directamente en GitHub y escribe la nueva ruta aquí.' },
+      { key: 'video_caption', label: 'Pie de video',        type: 'text' }
+    ]
+  },
+  {
+    id: 'coach', label: 'Coach',
+    fields: [
+      { key: 'coach_photo',    label: 'Foto de Verónica',  type: 'image',    prefix: 'coach-photo' },
+      { key: 'coach_headline', label: 'Titular',           type: 'textarea', hint: 'Usa \\n para salto de línea' },
+      { key: 'coach_body',     label: 'Texto principal',   type: 'textarea' },
+      { key: 'coach_quote',    label: 'Cita destacada',    type: 'textarea' }
+    ]
+  },
+  {
+    id: 'benefits', label: 'Beneficios',
+    fields: [
+      { key: 'benefits_label',    label: 'Etiqueta de sección', type: 'text' },
+      { key: 'benefits_headline', label: 'Titular',             type: 'text' },
+      { key: 'benefits',          label: 'Lista de beneficios', type: 'list-simple', itemLabel: 'beneficio' },
+      { key: 'benefits_coda',     label: 'Texto de cierre',     type: 'text' }
+    ]
+  },
+  {
+    id: 'forwho', label: 'Para quién',
+    fields: [
+      { key: 'forwho_headline', label: 'Titular',          type: 'text' },
+      { key: 'forwho_items',    label: 'Lista de puntos',  type: 'list-simple', itemLabel: 'punto' }
+    ]
+  },
+  {
+    id: 'notfor', label: 'Lo que NO es',
+    fields: [
+      { key: 'not_items', label: 'Puntos (sin "No es")', type: 'list-simple', itemLabel: 'punto' }
+    ]
+  },
+  {
+    id: 'testimonials', label: 'Testimonios',
+    fields: [
+      { key: 'testimonials', label: 'Testimonios', type: 'list-testimonials' }
+    ]
+  },
+  {
+    id: 'form', label: 'Formulario',
+    fields: [
+      { key: 'form_headline', label: 'Titular',           type: 'text' },
+      { key: 'form_meta',     label: 'Texto descriptivo', type: 'textarea', hint: 'Usa \\n para salto de línea' },
+      { key: 'form_cta',      label: 'Texto del botón',   type: 'textarea' }
+    ]
+  },
+  {
+    id: 'whatsapp', label: 'WhatsApp',
+    fields: [
+      { key: 'whatsapp_number',  label: 'Número (sin + ni espacios)', type: 'text', hint: 'Ejemplo: 34667732963' },
+      { key: 'whatsapp_message', label: 'Mensaje predefinido',        type: 'textarea' }
+    ]
+  },
+  {
+    id: 'footer', label: 'Footer',
+    fields: [
+      { key: 'instagram_url', label: 'URL de Instagram', type: 'text' },
+      { key: 'linkedin_url',  label: 'URL de LinkedIn',  type: 'text' },
+      { key: 'phone',         label: 'Teléfono',          type: 'text' },
+      { key: 'copyright',     label: 'Copyright',         type: 'text' }
+    ]
+  }
+];
+
+/* ──────────────────────────────────────────
+   ESTADO
+────────────────────────────────────────── */
+let DATA = {};
+let PASSWORD = '';
+let ACTIVE = 'hero';
+
+/* ──────────────────────────────────────────
+   UTILIDADES
+────────────────────────────────────────── */
+const $ = id => document.getElementById(id);
+
+function esc(s) {
+  return String(s ?? '')
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function toast(msg, type = 'ok') {
+  const t = $('toast');
+  t.textContent = msg;
+  t.className = type;
+  t.style.display = 'block';
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => { t.style.display = 'none'; }, 3400);
+}
+
+function setStatus(msg, type = '') {
+  const s = $('saveStatus');
+  s.textContent = msg;
+  s.className = type;
+}
+
+function fileToBase64(file) {
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(r.result.split(',')[1]);
+    r.onerror = rej;
+    r.readAsDataURL(file);
+  });
+}
+
+/* ──────────────────────────────────────────
+   API
+────────────────────────────────────────── */
+async function apiCall(body) {
+  const res = await fetch(API, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ ...body, password: PASSWORD })
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || 'Error ' + res.status);
+  return data;
+}
+
+/* ──────────────────────────────────────────
+   LOGIN
+────────────────────────────────────────── */
+async function doLogin() {
+  const pw = $('pwInput').value.trim();
+  if (!pw) return;
+  const btn = $('loginBtn');
+  btn.disabled = true;
+  btn.textContent = 'Comprobando…';
+  $('loginErr').style.display = 'none';
+
+  try {
+    PASSWORD = pw;
+    const res = await fetch(API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pw, type: 'ping' })
+    });
+    if (res.status === 401) {
+      PASSWORD = '';
+      $('loginErr').style.display = 'block';
+      return;
+    }
+    sessionStorage.setItem('vr_pw', pw);
+    await loadAndShowAdmin();
+  } catch {
+    $('loginErr').textContent = 'Error de conexión. Inténtalo de nuevo.';
+    $('loginErr').style.display = 'block';
+    PASSWORD = '';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Entrar';
+  }
+}
+
+/* ──────────────────────────────────────────
+   CARGAR CONTENIDO
+────────────────────────────────────────── */
+async function loadContent() {
+  const res = await fetch('../assets/content.json?t=' + Date.now());
+  if (!res.ok) throw new Error('No se pudo cargar content.json');
+  return res.json();
+}
+
+async function loadAndShowAdmin() {
+  DATA = await loadContent();
+  buildNav();
+  $('loginScreen').style.display = 'none';
+  $('adminApp').style.display = 'block';
+  navigate(ACTIVE);
+}
+
+/* ──────────────────────────────────────────
+   NAVEGACIÓN
+────────────────────────────────────────── */
+function buildNav() {
+  const nav = $('sideNav');
+  nav.innerHTML = SECTIONS.map(s =>
+    `<a href="#" data-section="${s.id}" class="${s.id === ACTIVE ? 'active' : ''}">
+       <span class="dot"></span>${s.label}
+     </a>`
+  ).join('');
+  nav.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', e => { e.preventDefault(); navigate(a.dataset.section); });
+  });
+}
+
+function navigate(id) {
+  ACTIVE = id;
+  document.querySelectorAll('#sideNav a').forEach(a =>
+    a.classList.toggle('active', a.dataset.section === id)
+  );
+  const section = SECTIONS.find(s => s.id === id);
+  if (!section) return;
+  $('headerTitle').textContent = section.label;
+  renderSection(section);
+}
+
+/* ──────────────────────────────────────────
+   RENDERIZADO
+────────────────────────────────────────── */
+function renderSection(section) {
+  $('sectionContent').innerHTML =
+    `<div class="card">${section.fields.map(renderField).join('')}</div>`;
+  attachListeners(section);
+}
+
+function renderField(field) {
+  const val = DATA[field.key];
+
+  if (field.type === 'text') {
+    return `<div class="field-group">
+      <label>${field.label}</label>
+      <input class="f-input" id="${field.key}" type="text" value="${esc(val)}">
+      ${field.hint ? `<p class="hint">${field.hint}</p>` : ''}
+    </div>`;
+  }
+
+  if (field.type === 'textarea') {
+    return `<div class="field-group">
+      <label>${field.label}</label>
+      <textarea class="f-textarea" id="${field.key}">${esc(val)}</textarea>
+      ${field.hint ? `<p class="hint">${field.hint}</p>` : ''}
+    </div>`;
+  }
+
+  if (field.type === 'image') {
+    const src = val ? `../${val}` : '';
+    return `<div class="field-group">
+      <label>${field.label}</label>
+      <div class="img-field">
+        <img class="img-preview" id="prev_${field.key}" src="${src}" alt="">
+        <div class="img-actions">
+          <button class="btn-upload" onclick="document.getElementById('file_${field.key}').click()">Cambiar imagen</button>
+          <input type="file" id="file_${field.key}" accept="image/*" data-key="${field.key}" data-prefix="${field.prefix}">
+          <span class="img-status" id="st_${field.key}"></span>
+          <span style="font-size:11px;color:var(--text-light);line-height:1.5">WebP, PNG o JPG<br>M&aacute;x recomendado: 500 KB</span>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  if (field.type === 'list-simple') {
+    const items = Array.isArray(val) ? val : [];
+    return `<div class="field-group">
+      <label>${field.label}</label>
+      <div class="list-container" data-key="${field.key}">
+        ${items.map(item => listRow(item.text)).join('')}
+        <button class="btn-add" data-key="${field.key}" data-item-label="${field.itemLabel || 'elemento'}">+ A&ntilde;adir ${field.itemLabel || 'elemento'}</button>
+      </div>
+    </div>`;
+  }
+
+  if (field.type === 'list-testimonials') {
+    const items = Array.isArray(val) ? val : [];
+    return `<div class="field-group">
+      <label>${field.label}</label>
+      <div class="list-container" data-key="${field.key}">
+        ${items.map(t => testimonialRow(t)).join('')}
+        <button class="btn-add testimonial-add" data-key="${field.key}">+ A&ntilde;adir testimonio</button>
+      </div>
+    </div>`;
+  }
+
+  return '';
+}
+
+function listRow(text) {
+  return `<div class="list-item">
+    <input class="f-input list-input" type="text" value="${esc(text)}" placeholder="Escribe aquí…">
+    <button class="btn-remove" title="Eliminar">&times;</button>
+  </div>`;
+}
+
+function testimonialRow(t) {
+  return `<div class="t-item">
+    <div style="margin-bottom:12px">
+      <label>Cita</label>
+      <textarea class="f-textarea t-quote">${esc(t.quote ?? '')}</textarea>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="t-author" style="flex:1">
+        <label>Autor</label>
+        <input class="f-input t-author-input" type="text" value="${esc(t.author ?? '')}" placeholder="Nombre, edad">
+      </div>
+      <button class="t-remove">Eliminar</button>
+    </div>
+  </div>`;
+}
+
+/* ──────────────────────────────────────────
+   LISTENERS
+────────────────────────────────────────── */
+function attachListeners(section) {
+  section.fields.filter(f => f.type === 'image').forEach(f => {
+    const inp = $(`file_${f.key}`);
+    if (inp) inp.addEventListener('change', () => handleImageUpload(inp, f.key));
+  });
+
+  document.querySelectorAll('.list-item .btn-remove').forEach(btn => {
+    btn.addEventListener('click', () => btn.closest('.list-item').remove());
+  });
+
+  document.querySelectorAll('.btn-add:not(.testimonial-add)').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const container = document.querySelector(`.list-container[data-key="${btn.dataset.key}"]`);
+      const div = document.createElement('div');
+      div.className = 'list-item';
+      div.innerHTML = `<input class="f-input list-input" type="text" placeholder="Escribe aquí…"><button class="btn-remove" title="Eliminar">&times;</button>`;
+      div.querySelector('.btn-remove').addEventListener('click', () => div.remove());
+      container.insertBefore(div, btn);
+      div.querySelector('input').focus();
+    });
+  });
+
+  document.querySelectorAll('.t-remove').forEach(btn => {
+    btn.addEventListener('click', () => btn.closest('.t-item').remove());
+  });
+
+  document.querySelectorAll('.testimonial-add').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const container = document.querySelector(`.list-container[data-key="${btn.dataset.key}"]`);
+      const div = document.createElement('div');
+      div.innerHTML = testimonialRow({ quote: '', author: '' });
+      const item = div.firstElementChild;
+      item.querySelector('.t-remove').addEventListener('click', () => item.remove());
+      container.insertBefore(item, btn);
+      item.querySelector('textarea').focus();
+    });
+  });
+}
+
+/* ──────────────────────────────────────────
+   SUBIDA DE IMAGEN
+────────────────────────────────────────── */
+async function handleImageUpload(input, key) {
+  const file = input.files[0];
+  if (!file) return;
+
+  const st   = $(`st_${key}`);
+  const prev = $(`prev_${key}`);
+
+  const reader = new FileReader();
+  reader.onload = e => { prev.src = e.target.result; };
+  reader.readAsDataURL(file);
+
+  st.textContent = 'Subiendo…';
+  st.className = 'img-status uploading';
+
+  try {
+    const ext  = file.name.split('.').pop().toLowerCase() || 'webp';
+    const path = `assets/${input.dataset.prefix}-${Date.now()}.${ext}`;
+    const b64  = await fileToBase64(file);
+
+    await apiCall({ type: 'upload', path, data: b64 });
+
+    DATA[key] = path;
+    st.textContent = 'Imagen subida. Guarda los cambios para aplicar.';
+    st.className = 'img-status ok';
+  } catch (err) {
+    st.textContent = 'Error: ' + err.message;
+    st.className = 'img-status err';
+  }
+}
+
+/* ──────────────────────────────────────────
+   RECOGER DATOS DEL FORMULARIO
+────────────────────────────────────────── */
+function collectData() {
+  const d = { ...DATA };
+
+  for (const section of SECTIONS) {
+    for (const f of section.fields) {
+      const el = $(f.key);
+
+      if ((f.type === 'text' || f.type === 'textarea') && el) {
+        d[f.key] = el.value;
+        continue;
+      }
+
+      if (f.type === 'list-simple') {
+        const c = document.querySelector(`.list-container[data-key="${f.key}"]`);
+        if (c) {
+          d[f.key] = Array.from(c.querySelectorAll('.list-input'))
+            .map(i => ({ text: i.value }))
+            .filter(i => i.text.trim() !== '');
+        }
+        continue;
+      }
+
+      if (f.type === 'list-testimonials') {
+        const c = document.querySelector(`.list-container[data-key="${f.key}"]`);
+        if (c) {
+          d[f.key] = Array.from(c.querySelectorAll('.t-item'))
+            .map(item => ({
+              quote:  item.querySelector('.t-quote')?.value ?? '',
+              author: item.querySelector('.t-author-input')?.value ?? ''
+            }))
+            .filter(t => t.quote.trim() !== '');
+        }
+        continue;
+      }
+      // image: DATA[key] actualizado en handleImageUpload
+    }
+  }
+
+  return d;
+}
+
+/* ──────────────────────────────────────────
+   GUARDAR
+────────────────────────────────────────── */
+async function saveAll() {
+  const btn = $('saveBtn');
+  btn.disabled = true;
+  btn.textContent = 'Guardando…';
+  setStatus('');
+
+  try {
+    const content = collectData();
+    await apiCall({ type: 'content', content });
+    DATA = content;
+    setStatus('Guardado — el sitio se actualiza en ~30s', 'ok');
+    toast('Cambios guardados. El sitio se desplegará en unos segundos.');
+  } catch (err) {
+    if (err.message.includes('401') || err.message.toLowerCase().includes('contrase')) {
+      setStatus('Sesión expirada — recarga y vuelve a entrar', 'err');
+      toast('Error de autenticación. Cierra sesión y vuelve a entrar.', 'err');
+    } else {
+      setStatus('Error al guardar', 'err');
+      toast('Error: ' + err.message, 'err');
+    }
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Guardar cambios';
+  }
+}
+
+/* ──────────────────────────────────────────
+   INICIO
+────────────────────────────────────────── */
+$('loginBtn').addEventListener('click', doLogin);
+$('pwInput').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+$('saveBtn').addEventListener('click', saveAll);
+$('logoutBtn').addEventListener('click', () => {
+  sessionStorage.removeItem('vr_pw');
+  PASSWORD = '';
+  DATA = {};
+  $('adminApp').style.display = 'none';
+  $('loginScreen').style.display = 'flex';
+  $('pwInput').value = '';
+  $('loginErr').style.display = 'none';
+});
+
+(async () => {
+  const saved = sessionStorage.getItem('vr_pw');
+  if (saved) {
+    PASSWORD = saved;
+    try { await loadAndShowAdmin(); }
+    catch { sessionStorage.removeItem('vr_pw'); PASSWORD = ''; }
+  }
+})();
+</script>
 </body>
 </html>
